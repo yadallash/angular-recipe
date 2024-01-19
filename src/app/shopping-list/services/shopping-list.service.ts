@@ -18,7 +18,7 @@ export class ShoppingListService {
     addIngredient(ingredient: Ingredient) {
         this.ingredients.push(ingredient);
         this.didIngredientsChanged.emit(this.ingredients.slice());
-
+        console.log("Ingredient has been added" + ingredient.name + ingredient.amount)
     }
 
 

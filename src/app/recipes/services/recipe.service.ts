@@ -8,20 +8,26 @@ export class RecipeService {
     recipeSelected = new EventEmitter<Recipe>();
 
     recipes: Recipe[] = [
-        new Recipe('A test Recipe','This is a simple a test ', 'https://carnivalmunchies.com/wp-content/uploads/2015/09/tom-yum-1.jpg'),
-        new Recipe('Tom yum Recipe','Such a delight to eat ', 'https://carnivalmunchies.com/wp-content/uploads/2015/09/tom-yum-1.jpg'),
-    
-      ];
+        new Recipe('A test Recipe',
+            'This is a simple a test ',
+            'https://carnivalmunchies.com/wp-content/uploads/2015/09/tom-yum-1.jpg',
+            [new Ingredient("coconuts", 5)]),
+        new Recipe('Tom yum Recipe',
+            'Such a delight to eat ',
+            'https://carnivalmunchies.com/wp-content/uploads/2015/09/tom-yum-1.jpg',
+            [new Ingredient("coconuts", 5)]),
+
+    ];
 
 
-      constructor(private shoppingListService: ShoppingListService) {}
+    constructor(private shoppingListService: ShoppingListService) { }
 
-      getRecipes() : Recipe[] {
+    getRecipes(): Recipe[] {
         return this.recipes.slice()
-      }
+    }
 
-      addIngredientsToShoppingList(ingredients: Ingredient[]){
+    addIngredientsToShoppingList(ingredients: Ingredient[]) {
         this.shoppingListService.addIngredients(ingredients);
-      }
+    }
 
 }

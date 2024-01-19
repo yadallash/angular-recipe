@@ -22,6 +22,7 @@ import { ShoppingListService } from './shopping-list/services/shopping-list.serv
     RecipeItemComponent,
     ShoppingListComponent,
     ShoppingEditComponent,
+    ShoppingEditComponent,
   ],
   imports: [
     BrowserModule,
