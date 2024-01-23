@@ -8,11 +8,11 @@ import { RecipeService } from '../services/recipe.service';
   styleUrls: ['./recipe-detail.component.css']
 })
 export class RecipeDetailComponent {
-@Input() recipe: Recipe;
- constructor(private recipeService: RecipeService){}
+  @Input() recipe: Recipe;
+  constructor(private recipeService: RecipeService) { }
 
-onAddToShoppingList(){
-  this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
-}
+  onAddToShoppingList() {
+    this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
+  }
 
 }
