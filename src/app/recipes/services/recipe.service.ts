@@ -8,14 +8,21 @@ export class RecipeService {
     recipeSelected = new EventEmitter<Recipe>();
 
     recipes: Recipe[] = [
-        new Recipe('A test Recipe',
+        new Recipe(
+            1,
+            'A test Recipe',
             'This is a simple a test ',
             'https://carnivalmunchies.com/wp-content/uploads/2015/09/tom-yum-1.jpg',
             [new Ingredient("coconuts", 5)]),
-        new Recipe('Tom yum Recipe',
+        new Recipe(
+            2,
+            'Tom yum Recipe',
             'Such a delight to eat ',
             'https://carnivalmunchies.com/wp-content/uploads/2015/09/tom-yum-1.jpg',
-            [new Ingredient("coconuts", 5)]),
+            [
+                new Ingredient("coconuts", 5)
+            ]
+        ),
 
     ];
 
@@ -28,6 +35,14 @@ export class RecipeService {
 
     addIngredientsToShoppingList(ingredients: Ingredient[]) {
         this.shoppingListService.addIngredients(ingredients);
+    }
+
+    getRecipe(id: number): Recipe {
+        const recipe = this.recipes.find((recipe: Recipe) => {
+            return recipe.id === id
+        });
+        console.log("********DEBUG********" + recipe.name)
+        return recipe
     }
 
 }
