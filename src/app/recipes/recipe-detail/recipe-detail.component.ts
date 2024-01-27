@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Recipe } from '../models/recipe.model';
 import { RecipeService } from '../services/recipe.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -13,6 +13,7 @@ export class RecipeDetailComponent implements OnInit {
   id: number;
   constructor(
     private recipeService: RecipeService,
+    private router: Router,
     private route: ActivatedRoute
   ) {
   }
@@ -33,5 +34,9 @@ export class RecipeDetailComponent implements OnInit {
   onAddToShoppingList() {
     this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
   }
-
+  recipeEditClicked() {
+    this.router.navigate(['edit'], {relativeTo: this.route});
+    // FYI you can create a complex paths as follows
+    // this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.route});
+  }
 }
