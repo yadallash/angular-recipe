@@ -11,7 +11,7 @@ export class ShoppingEditComponent {
   someTestValue = "Hey it is connected";
   @ViewChild('nameInput', { static: false}) nameInputRef: ElementRef;
  
-  @ViewChild('nameInput', { static: false}) amountInputRef: ElementRef;
+  @ViewChild('amountInput', { static: false}) amountInputRef: ElementRef;
 
   constructor(private shoppingListService: ShoppingListService){}
 
