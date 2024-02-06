@@ -7,29 +7,47 @@ import { Subject } from "rxjs";
 @Injectable()
 export class RecipeService {
 
+    recipesChanged = new Subject<Recipe[]>();
+
     recipes: Recipe[] = [
         new Recipe(
-            1,
-            'A test Recipe',
-            'This is a simple a test ',
-            'https://carnivalmunchies.com/wp-content/uploads/2015/09/tom-yum-1.jpg',
+            'Spaghetti Carbonara',
+            'Classic Italian pasta dish with a rich, creamy sauce',
+            'https://foodwhirl.com/wp-content/uploads/2017/02/spaghetti-carbonara-insta.jpg',
             [
-
-                new Ingredient("coconuts", 5),
-                new Ingredient("mushrooms", 2),
-
-            ]),
-        new Recipe(
-            2,
-            'Tom yum Recipe',
-            'Such a delight to eat ',
-            'https://carnivalmunchies.com/wp-content/uploads/2015/09/tom-yum-1.jpg',
-            [
-                new Ingredient("coconuts", 5)
-            ]
+                new Ingredient("Spaghetti", 1),
+                new Ingredient("Eggs", 4),
+                new Ingredient("Pancetta", 250),
+                new Ingredient("Parmesan Cheese", 75),
+            ],
+            3,
         ),
-
+        new Recipe(
+            'Vegetable Stir Fry',
+            'Quick and healthy stir fry with fresh vegetables',
+            'https://therecipecritic.com/wp-content/uploads/2019/08/vegetable_stir_fry.jpg',
+            [
+                new Ingredient("Broccoli", 1),
+                new Ingredient("Carrot", 2),
+                new Ingredient("Bell Pepper", 1),
+                new Ingredient("Soy Sauce", 2),
+            ],
+            4,
+        ),
+        new Recipe(
+            'Chicken Curry',
+            'Rich and flavorful Indian-style chicken curry',
+            'https://www.supergoldenbakes.com/wordpress/wp-content/uploads/2020/01/Slow_Cooker_Curry-4-838x1024.jpg',
+            [
+                new Ingredient("Chicken", 500),
+                new Ingredient("Onions", 2),
+                new Ingredient("Tomatoes", 2),
+                new Ingredient("Curry Powder", 1),
+            ],
+            5,
+        )
     ];
+
 
 
     constructor(private shoppingListService: ShoppingListService) { }
@@ -43,11 +61,47 @@ export class RecipeService {
     }
 
     getRecipe(id: number): Recipe {
-        const recipe = this.recipes.find((recipe: Recipe) => {
-            return recipe.id === id
-        });
-        console.log("********DEBUG********" + recipe.name)
-        return recipe
+        console.log("*****DEBUG**** Here is your id: ", id);
+
+        const recipe = this.recipes.find((recipe: Recipe) => recipe.id === id);
+
+        if (!recipe) {
+            console.log(`*****DEBUG**** No recipe found with id: ${id}`);
+            // Handle the "no recipe found" scenario here
+            // You can throw an error or return a default value
+            throw new Error(`No recipe found with id: ${id}`);
+            // Or, if you prefer not to throw, you could return `null` or a default recipe object
+            // return null;
+            // return new Recipe('Default', '', '', [], -1); // Example of a default recipe
+        }
+
+        console.log("*****DEBUG**** Found recipe: ", recipe.name);
+        return recipe;
     }
+
+    addRecipe(recipe: Recipe) {
+        this.recipes.push(recipe);
+
+        this.recipesChanged.next(this.recipes.slice())
+        console.log("********DEBUG********" + this.recipes)
+    }
+
+    updateRecipe(atId: number, withUpdatedRecipe: Recipe) {
+        // Find the index of the recipe with the given id
+        const index = this.recipes.findIndex(recipe => recipe.id === atId);
+
+        // Check if the recipe was found (index will be -1 if not found)
+        if (index !== -1) {
+            // Update the recipe at the found index
+            this.recipes[index] = withUpdatedRecipe;
+            // Log the updated recipes array for debugging
+            console.log("********DEBUG******** Updated recipes:", this.recipes);
+            this.recipesChanged.next(this.recipes.slice())
+        } else {
+            // Handle the case where the recipe with the given id is not found
+            console.log(`********DEBUG******** No recipe found with id: ${atId} here are the list of recipes ${this.recipes}`);
+        }
+    }
+
 
 }

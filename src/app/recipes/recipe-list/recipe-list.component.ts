@@ -22,7 +22,9 @@ export class RecipeListComponent implements OnInit {
 
   ngOnInit(): void {
     this.recipes = this.recipeService.getRecipes();
-
+    this.recipeService.recipesChanged.subscribe((updatedRecipes)=>{
+      this.recipes = updatedRecipes;
+    })
   }
   onNewRecipeClicked() {
     console.log("new Recipe buttton clicked")
