@@ -16,8 +16,6 @@ export class RecipeListComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-
-
   }
 
   ngOnInit(): void {

@@ -76,10 +76,10 @@ export class RecipeEditComponent implements OnInit {
     }else {
       this.recipeService.addRecipe(newRecipe);
       console.log("DEBUG Tryin to update a new recipe ");
-
     }
   }
 
+ 
   onAddIngredient() {
     (<FormArray>this.recipeForm.get('ingredients')).push(new FormGroup({
       'name': new FormControl(null, Validators.required),
