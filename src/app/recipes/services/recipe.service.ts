@@ -53,6 +53,7 @@ export class RecipeService {
     constructor(private shoppingListService: ShoppingListService) { }
 
     getRecipes(): Recipe[] {
+        console.log("********DEBUG********" + this.recipes.length)
         return this.recipes.slice()
     }
 
