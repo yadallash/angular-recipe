@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Recipe } from "../models/recipe.model";
 import { ShoppingListService } from "src/app/shopping-list/services/shopping-list.service";
 import { Ingredient } from "src/app/shared/ingredient.model";
@@ -102,6 +102,21 @@ export class RecipeService {
             console.log(`********DEBUG******** No recipe found with id: ${atId} here are the list of recipes ${this.recipes}`);
         }
     }
+    deleteRecipe(atId: number) {
+        // Find the index of the recipe with the given id
+        const index = this.recipes.findIndex(recipe => recipe.id === atId);
 
+        // Check if the recipe was found (index will be -1 if not found)
+        if (index !== -1) {
+            // Update the recipe at the found index
+            this.recipes.splice(index, 1)
+            // Log the updated recipes array for debugging
+            console.log("********DEBUG******** Deleted recipes:", this.recipes);
+            this.recipesChanged.next(this.recipes.slice())
+        } else {
+            // Handle the case where the recipe with the given id is not found
+            console.log(`********DEBUG******** No recipe found with id: ${atId} here are the list of recipes ${this.recipes}`);
+        }
+    }
 
 }
