@@ -75,7 +75,6 @@ export class RecipeEditComponent implements OnInit {
     console.log("DEBUG Tryin to update an existing recipe ");
     }else {
       this.recipeService.addRecipe(newRecipe);
-      console.log("DEBUG Tryin to update a new recipe ");
     }
   }
 
