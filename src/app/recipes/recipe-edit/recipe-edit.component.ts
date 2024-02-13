@@ -68,23 +68,33 @@ export class RecipeEditComponent implements OnInit {
       this.recipeForm.value['description'],
       this.recipeForm.value['imagePath'],
       this.recipeForm.value['ingredients']
-      )
+    )
 
     if (this.editMode && this.id != null) {
       this.recipeService.updateRecipe(this.id, newRecipe)
-    console.log("DEBUG Tryin to update an existing recipe ");
-    }else {
+      console.log("DEBUG Tryin to update an existing recipe ");
+    } else {
       this.recipeService.addRecipe(newRecipe);
     }
   }
 
- 
+
   onAddIngredient() {
     (<FormArray>this.recipeForm.get('ingredients')).push(new FormGroup({
       'name': new FormControl(null, Validators.required),
       'amount': new FormControl([Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
     }));
     console.log("New ingredient added entry");
+  }
+
+  onDeleteIngredient(atIndex: number) {
+    (<FormArray>this.recipeForm.get('ingredients')).removeAt(atIndex)
+
+    if (this.editMode) {
+      const recipe = this.recipeService.getRecipe(this.id);
+      this.recipeService.deleteIngredient(atIndex, recipe);
+      
+    }
   }
 
 }

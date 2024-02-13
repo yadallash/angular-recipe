@@ -83,7 +83,7 @@ export class RecipeService {
     addRecipe(recipe: Recipe) {
         const newRecipeId = this.generateRandomId(1, 10000);
         recipe.id = newRecipeId;
-        console.log("****DEBUG*****"+recipe.id + " name: " + recipe.name);
+        console.log("****DEBUG*****" + recipe.id + " name: " + recipe.name);
         this.recipes.push(recipe);
         this.recipesChanged.next(this.recipes.slice())
         console.log("********DEBUG********" + this.recipes.length)
@@ -122,7 +122,25 @@ export class RecipeService {
         }
     }
 
-   generateRandomId(min: number, max: number): number {
+    deleteIngredient(atIndex: number, inRecipe: Recipe) {
+        // Find the index of the recipe with the given id
+        const index = this.recipes.findIndex(recipe => recipe.id === inRecipe.id);
+
+        // Check if the recipe was found (index will be -1 if not found)
+        if (index !== -1) {
+            // Update the recipe at the found index
+
+            this.recipes[index].ingredients.splice(atIndex, 1);
+            // Log the updated recipes array for debugging
+            console.log("********DEBUG******** delete ingredient in recipes:", this.recipes);
+            this.recipesChanged.next(this.recipes.slice())
+        } else {
+            // Handle the case where the recipe with the given id is not found
+            console.log(`********DEBUG******** No recipe found with id: ${atIndex} here are the list of recipes ${this.recipes}`);
+        }
+    }
+
+    generateRandomId(min: number, max: number): number {
         // Ensure the range is valid
         if (min >= max) {
             throw new Error("Minimum value must be less than the maximum value.");
@@ -130,6 +148,7 @@ export class RecipeService {
         // Generate a random number within the specified range
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-    
+
+
 
 }
